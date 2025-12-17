@@ -9,6 +9,7 @@ import {
   Body,
   HttpCode,
   HttpStatus,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
@@ -18,17 +19,22 @@ import { ProfilesService } from './profiles.service';
 export class ProfilesController {
   constructor(private profilesService: ProfilesService) {}
 
+  @Get()
+  findAll() {
+    return this.profilesService.findAll();
+  }
+
   // GET /profiles?location
   @Get()
-  findAll(@Query('location') location: string) {
-    return this.profilesService.findAll();
+  queryExample(@Query('location') location: string) {
+    return location;
   }
 
   // Get /profiles/:id
   @Get(':id')
   findOne(@Param('id') id: string) {
-    console.log(id);
     return this.profilesService.findOne(id);
+    // throw new NotFoundException();
   }
 
   @Post()

@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { CreateProfileDto } from './dto/create-profile.dto';
@@ -15,7 +16,10 @@ export class ProfilesService {
   }
 
   findOne(id: string) {
-    return this.findAll().find((profile) => profile.id === id);
+    const matchingProfile = this.findAll().find((profile) => profile.id === id);
+    if (!matchingProfile)
+      throw new NotFoundException('Profile does not exist, id: ' + id);
+    return matchingProfile;
   }
 
   create(createProfileDto: CreateProfileDto) {
@@ -29,7 +33,10 @@ export class ProfilesService {
 
   update(id: string, updatedProfileDto: CreateProfileDto) {
     const matchingProfile = this.profiles.find((profile) => profile.id === id);
-    if (!matchingProfile) return {};
+    if (!matchingProfile)
+      throw new NotFoundException(
+        'Cannot update. Profile does not exist, id: ' + id,
+      );
     matchingProfile.name = updatedProfileDto.name;
     matchingProfile.description = updatedProfileDto.description;
     return matchingProfile;
@@ -39,6 +46,12 @@ export class ProfilesService {
     const matchingProfileIndex = this.profiles.findIndex(
       (profile) => profile.id === id,
     );
-    if (matchingProfileIndex > 1) this.profiles.splice(matchingProfileIndex, 1);
+
+    if (matchingProfileIndex === 1) {
+      throw new NotFoundException(
+        'Cannot delete a profile that does not exist, id: ' + id,
+      );
+    }
+    this.profiles.splice(matchingProfileIndex, 1);
   }
 }
