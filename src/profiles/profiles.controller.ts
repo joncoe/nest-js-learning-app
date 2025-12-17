@@ -38,16 +38,12 @@ export class ProfilesController {
 
   @Put(':id')
   update(@Param('id') id: string, @Body() updateProfileDto: UpdateProfileDto) {
-    return {
-      id,
-      message: '✅',
-      ...updateProfileDto,
-    };
+    return this.profilesService.update(id, updateProfileDto);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: string) {
-    return true;
+    this.profilesService.delete(id);
   }
 }

@@ -26,4 +26,19 @@ export class ProfilesService {
     this.profiles.push(newProfile);
     return newProfile;
   }
+
+  update(id: string, updatedProfileDto: CreateProfileDto) {
+    const matchingProfile = this.profiles.find((profile) => profile.id === id);
+    if (!matchingProfile) return {};
+    matchingProfile.name = updatedProfileDto.name;
+    matchingProfile.description = updatedProfileDto.description;
+    return matchingProfile;
+  }
+
+  delete(id: string) {
+    const matchingProfileIndex = this.profiles.findIndex(
+      (profile) => profile.id === id,
+    );
+    if (matchingProfileIndex > 1) this.profiles.splice(matchingProfileIndex, 1);
+  }
 }
