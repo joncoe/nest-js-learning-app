@@ -5,7 +5,7 @@ export class UpdateProfileDto {
   name: string;
 
   @IsString()
-  @Min(25, {
+  @Length(2, 100, {
     message: 'Your description is WAY TOO SHORT',
   })
   description: string;

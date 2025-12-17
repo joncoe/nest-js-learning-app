@@ -40,14 +40,14 @@ export class ProfilesController {
   }
 
   @Post()
-  create(@Body(new ValidationPipe()) createProfileDto: CreateProfileDto) {
+  create(@Body() createProfileDto: CreateProfileDto) {
     return this.profilesService.create({ ...createProfileDto });
   }
 
   @Put(':id')
   update(
     @Param('id', ParseUUIDPipe) id: UUID,
-    @Body(new ValidationPipe()) updateProfileDto: UpdateProfileDto,
+    @Body() updateProfileDto: UpdateProfileDto,
   ) {
     return this.profilesService.update(id, updateProfileDto);
   }
