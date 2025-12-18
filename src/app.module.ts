@@ -5,7 +5,7 @@ import { ProfilesModule } from './profiles/profiles.module';
 
 @Module({
   imports: [ProfilesModule],
-  controllers: [AppController],
-  providers: [AppService],
+  // controllers: [AppController],
+  // providers: [AppService],
 })
 export class AppModule {}
