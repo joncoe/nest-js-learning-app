@@ -1,3 +1,7 @@
+# NestJS Quick Study
+
+This is a quick project that was made to understand the essential concepts of a NestJS application.
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
